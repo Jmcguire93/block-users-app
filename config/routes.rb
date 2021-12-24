@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     member do
       get :following, :followers
       put :block
+      put :unblock
     end
   end
   resources :account_activations, only: [:edit]

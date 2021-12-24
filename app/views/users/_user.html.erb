@@ -5,8 +5,14 @@
     | <%= link_to "delete", user, method: :delete,
                                   data: { confirm: "You sure?" } %>
   <% end %>
-  <% if !current_user?(user) %>
+  <% if !current_user?(user) && !is_user_blocked?(user) %>
     | <%= link_to "block", block_user_path(user.id), method: :put, 
                                   data: { confirm: "Block this user?" } %>
   <% end %>
+
+  <% if is_user_blocked?(user) %>
+    | <%= link_to "unblock", unblock_user_path(user.id), method: :put,
+                                  data: { confirm: "Unblock this user?" } %>
+  <% end %>
+  
 </li>

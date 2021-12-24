@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy,
-                                        :following, :followers, :block]
+                                        :following, :followers, :block, :unblock]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
   def index
     @users = User.paginate(page: params[:page])
+    @blocked_users = @current_user.blocked
   end
 
   def show
@@ -54,7 +55,6 @@ class UsersController < ApplicationController
     @user_to_block = User.find(params[:id])
     if @current_user.blocked.include?(@user_to_block)
       flash[:error] = "User is already blocked"
-      # redirect_to users_url
     else
       @current_user.blocked << @user_to_block 
         if @current_user.save
@@ -62,6 +62,19 @@ class UsersController < ApplicationController
         else
           flash[:error] = "Failed to block user"
         end
+    end
+    redirect_to users_url
+  end
+
+  def unblock
+    @user_to_unblock = User.find(params[:id])
+    if @current_user.blocked.include?(@user_to_unblock)
+      @current_user.blocked.delete(@user_to_unblock)
+      if @current_user.save 
+        flash[:success] = "User unblocked"
+      else 
+        flash[:error] = "Failed to unblock user"
+      end
     end
     redirect_to users_url
   end
