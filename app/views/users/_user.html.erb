@@ -6,7 +6,7 @@
                                   data: { confirm: "You sure?" } %>
   <% end %>
   <% if !current_user?(user) %>
-    | <%= link_to "block", user, method: :put, 
+    | <%= link_to "block", block_user_path(user.id), method: :put, 
                                   data: { confirm: "Block this user?" } %>
   <% end %>
 </li>
