@@ -50,10 +50,10 @@ class UsersController < ApplicationController
   end
 
   def block
-    user = BlockedUser.new
-    user.blocker_id = @current_user.id
-    user.blocked_id = params[:id]
-    if user.save
+    @blocked = "Blocked"
+    @user_to_block = User.find(params[:id])
+    @current_user.blocked << @user_to_block 
+    if @current_user.save
       flash[:success] = "User is blocked"
       # redirect_to users_url
     else
