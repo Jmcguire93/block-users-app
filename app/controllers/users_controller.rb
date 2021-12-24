@@ -46,11 +46,19 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
     redirect_to users_url
+
   end
 
-  def block 
-    User.find(params[:id]).block
-    flash[:success] = "User is blocked"
+  def block
+    user = BlockedUser.new
+    user.blocker_id = @current_user.id
+    user.blocked_id = params[:id]
+    if user.save
+      flash[:success] = "User is blocked"
+      # redirect_to users_url
+    else
+      flash[:error] = "Failed to block user"
+    end
     redirect_to users_url
   end
 
