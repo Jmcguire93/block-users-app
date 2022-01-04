@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+  get    '/blocked_users', to: 'blocked_users#index'
+
+  resources :blocked_users 
 
   resources :users do
     member do
