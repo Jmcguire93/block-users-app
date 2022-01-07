@@ -27,6 +27,13 @@ class BlockedUserTest < ActiveSupport::TestCase
     assert_not archer.feed.any? { |post| post.user_id == michael.id }
   end
 
+  test "something" do
+    michael = users(:michael)
+    archer = users(:archer)
+    michael.block(archer)
+    assert archer.blocked_by?(michael)
+  end
+
 
 
 #   test "feed should have the right posts" do

@@ -116,9 +116,6 @@ class User < ApplicationRecord
 
   # Blocks a user.
   def block(other_user) 
-    # if following?(other_user)
-    #   unfollow(other_user)
-    # end
     self.unfollow(other_user)
     other_user.unfollow(self)
     blocked << other_user unless self == other_user
@@ -132,6 +129,12 @@ class User < ApplicationRecord
   # Returns true if the current user is blocking the other user.
   def blocked?(other_user)
     blocked.include?(other_user)
+  end
+
+  def blocked_by?(other_user)
+    puts "-------"
+    p blockers 
+    blockers.include?(other_user)
   end
 
   private
