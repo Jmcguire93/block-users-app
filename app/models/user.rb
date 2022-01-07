@@ -91,7 +91,9 @@ class User < ApplicationRecord
   def feed
     following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids})
+    blocked_ids = "SELECT blocked_id FROM blocked_users
+                     WHERE  blocker_id = :user_id"
+    Micropost.where("user_id IN (#{following_ids}) AND user_id NOT IN (#{blocked_ids})
                      OR user_id = :user_id", user_id: id)
   end
 

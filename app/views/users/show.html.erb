@@ -6,17 +6,15 @@
         <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
-      <p>
-  <% if !current_user?(@user) && !is_user_blocked?(@user) %>
-    <%= link_to "Block", block_user_path(@user.id), method: :put, 
-                                  data: { confirm: "Block this user?" } %>
-  <% end %>
+      <% if !current_user?(@user) && !is_user_blocked?(@user) %>
+        <%= link_to "Block", block_user_path(@user.id), method: :put, 
+                                      data: { confirm: "Block this user?" } %>
+      <% end %>
 
-  <% if is_user_blocked?(@user) %>
-    <%= link_to "Unblock", unblock_user_path(@user.id), method: :put,
-                                  data: { confirm: "Unblock this user?" } %>
-  <% end %>
-</p>
+      <% if is_user_blocked?(@user) %>
+        <%= link_to "Unblock", unblock_user_path(@user.id), method: :put,
+                                      data: { confirm: "Unblock this user?" } %>
+      <% end %>
     </section>
     <section class="stats">
       <%= render 'shared/stats' %>

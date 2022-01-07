@@ -5,11 +5,9 @@ Rails.application.routes.draw do
   get    '/contact', to: 'static_pages#contact'
   get    '/signup',  to: 'users#new'
   get    '/login',   to: 'sessions#new'
+  get    '/blocked_users', to: 'blocked_users#index'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
-  get    '/blocked_users', to: 'blocked_users#index'
-
-  resources :blocked_users 
 
   resources :users do
     member do

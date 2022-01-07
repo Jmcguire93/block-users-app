@@ -9,6 +9,10 @@ module UsersHelper
   end
 
   def is_user_blocked?(user)
-    @current_user.blocked.include?(user)
+    if @current_user == nil 
+      return false 
+    else
+      @current_user.blocked.include?(user)
+    end
   end
 end
