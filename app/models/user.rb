@@ -112,6 +112,21 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  # Blocks a user.
+  def block(other_user) 
+    blocked << other_user unless self == other_user
+  end
+
+  # Unblocks a user. 
+  def unblock(other_user)
+    blocked.delete(other_user)
+  end
+
+  # Returns true if the current user is blocking the other user.
+  def blocked?(other_user)
+    blocked.include?(other_user)
+  end
+
   private
 
     # Converts email to all lowercase.
