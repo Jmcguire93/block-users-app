@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     if @current_user.blocked.include?(@user_to_block)
       flash[:error] = "User is already blocked"
     else
-      @current_user.blocked << @user_to_block 
+      @current_user.block(@user_to_block) 
         if @current_user.save
           flash[:success] = "Blocked user successfully"
         else

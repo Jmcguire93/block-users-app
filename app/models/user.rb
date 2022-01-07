@@ -8,7 +8,11 @@ class User < ApplicationRecord
                                    dependent:   :destroy
   has_many :blocked_users, class_name: "BlockedUser",
                                    foreign_key: "blocker_id"
+                                   
+  has_many :blocking_users, class_name: "BlockedUser",
+                                   foreign_key: "blocked_id"                            
   has_many :blocked, through: :blocked_users, source: :blocked
+  has_many :blockers, through: :blocking_users, source: :blocker
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
   attr_accessor :remember_token, :activation_token, :reset_token
@@ -91,9 +95,7 @@ class User < ApplicationRecord
   def feed
     following_ids = "SELECT followed_id FROM relationships
                      WHERE  follower_id = :user_id"
-    blocked_ids = "SELECT blocked_id FROM blocked_users
-                     WHERE  blocker_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids}) AND user_id NOT IN (#{blocked_ids})
+    Micropost.where("user_id IN (#{following_ids}) 
                      OR user_id = :user_id", user_id: id)
   end
 
@@ -114,6 +116,11 @@ class User < ApplicationRecord
 
   # Blocks a user.
   def block(other_user) 
+    # if following?(other_user)
+    #   unfollow(other_user)
+    # end
+    self.unfollow(other_user)
+    other_user.unfollow(self)
     blocked << other_user unless self == other_user
   end
 

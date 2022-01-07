@@ -5,20 +5,29 @@ class BlockedUserTest < ActiveSupport::TestCase
     michael = users(:michael)
     archer  = users(:archer)
     assert_not michael.blocked?(archer)
+    michael.block(archer)
+    assert michael.blocked?(archer)
+    assert archer.blockers.include?(michael)
+    michael.unblock(archer)
+    assert_not michael.blocked?(archer)
+    #Users can't block themselves
+    michael.block(michael)
+    assert_not michael.blocked?(michael)
   end
-#  test "should follow and unfollow a user" do
-#     michael = users(:michael)
-#     archer  = users(:archer)
-#     assert_not michael.following?(archer)
-#     michael.follow(archer)
-#     assert michael.following?(archer)
-#     assert archer.followers.include?(michael)
-#     michael.unfollow(archer)
-#     assert_not michael.following?(archer)
-#     # Users can't follow themselves.
-#     michael.follow(michael)
-#     assert_not michael.following?(michael)
-#   end
+
+
+  test "feed should have the right posts" do 
+    michael = users(:michael)
+    archer  = users(:archer)
+    # Posts from followed user
+    michael.follow(archer)
+    assert michael.feed.any? { |post| post.user_id == archer.id }
+    michael.block(archer)
+    assert_not michael.feed.any? { |post| post.user_id == archer.id }
+    assert_not archer.feed.any? { |post| post.user_id == michael.id }
+  end
+
+
 
 #   test "feed should have the right posts" do
 #     michael = users(:michael)
