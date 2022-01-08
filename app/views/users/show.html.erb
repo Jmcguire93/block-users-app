@@ -21,7 +21,7 @@
     </section>
   </aside>
   <div class="col-md-8">
-    <%= render 'follow_form' if logged_in? && !current_user.blocked_by?(@user) && !current_user.blocked?(@user) %>
+    <%= render 'follow_form' if logged_in? && !current_user?(@user) && !current_user.blocked_by?(@user) && !current_user.blocked?(@user) %>
     <% if !is_user_blocked?(@user) && @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
       <ol class="microposts">

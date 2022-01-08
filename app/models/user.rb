@@ -132,8 +132,6 @@ class User < ApplicationRecord
   end
 
   def blocked_by?(other_user)
-    puts "-------"
-    p blockers 
     blockers.include?(other_user)
   end
 

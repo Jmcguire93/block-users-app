@@ -2,5 +2,7 @@
 
 <h1>Blocked Users</h1>
 <ol class="users">
-  <%= render @current_user.blocked %>
+  <%= render(@current_user.blocked) || content_tag("p") do  %>
+    You haven't blocked any users! To block a user simply click "Block" on the user's profile page or on the all users page next to their name. Blocking a user will prevent you both from interacting, hide microposts and disable follow features. Users can always be unblocked if you change your mind.
+  <% end %>
 </ol> 
