@@ -1,0 +1,6 @@
+<%= form_with(model: @blocked_user, local: true, method: :put) do |f| %>
+  <div class="field">
+    <%= f.text_area :reason, placeholder: "Reason for blocking user..." %>
+  </div>
+  <%= f.submit "Block User", class: "btn btn-primary" %>
+<% end %>

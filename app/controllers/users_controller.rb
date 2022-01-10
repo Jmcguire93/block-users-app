@@ -51,19 +51,23 @@ class UsersController < ApplicationController
   end
 
   def block
-    @blocked = "Blocked"
-    @user_to_block = User.find(params[:id])
-    if @current_user.blocked.include?(@user_to_block)
-      flash[:error] = "User is already blocked"
+    if request.get?
+      render "blocked_users/block_user_form"
     else
-      @current_user.block(@user_to_block) 
+      @blocked = "Blocked"
+      @user_to_block = User.find(params[:id])
+      if @current_user.blocked.include?(@user_to_block)
+        flash[:error] = "User is already blocked"
+      else
+        @current_user.block(@user_to_block) 
         if @current_user.save
           flash[:success] = "Blocked user successfully"
         else
           flash[:error] = "Failed to block user"
         end
+      end
+      redirect_to users_url
     end
-    redirect_to users_url
   end
 
   def unblock
