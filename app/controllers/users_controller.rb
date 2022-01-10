@@ -51,6 +51,8 @@ class UsersController < ApplicationController
   end
 
   def block
+    # p @blocked_user
+    # p params 
     if request.get?
       render "blocked_users/block_user_form"
     else
@@ -59,7 +61,7 @@ class UsersController < ApplicationController
       if @current_user.blocked.include?(@user_to_block)
         flash[:error] = "User is already blocked"
       else
-        @current_user.block(@user_to_block) 
+        @current_user.block(@user_to_block, params[:reason]) 
         if @current_user.save
           flash[:success] = "Blocked user successfully"
         else
