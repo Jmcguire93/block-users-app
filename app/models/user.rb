@@ -6,11 +6,12 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name:  "Relationship",
                                    foreign_key: "followed_id",
                                    dependent:   :destroy
-  has_many :blocked_users, class_name: "BlockedUser",
-                                   foreign_key: "blocker_id"
-                                   
+  has_many :blocked_users, class_name: "BlockedUser", 
+                                   foreign_key: "blocker_id", 
+                                   dependent: :destroy
   has_many :blocking_users, class_name: "BlockedUser",
-                                   foreign_key: "blocked_id"                            
+                                   foreign_key: "blocked_id".
+                                   dependent: :destroy                            
   has_many :blocked, through: :blocked_users, source: :blocked
   has_many :blockers, through: :blocking_users, source: :blocker
   has_many :following, through: :active_relationships,  source: :followed
