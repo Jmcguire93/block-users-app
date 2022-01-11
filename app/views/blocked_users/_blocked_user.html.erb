@@ -1,0 +1,9 @@
+<li>
+  <% user = blocked_user.blocked %>
+  <%= gravatar_for user, size: 50 %>
+  <%= link_to user.name, user %>
+    | <%= link_to "unblock", unblock_user_path(user.id), method: :put,
+                                  data: { confirm: "Unblock this user?" } %>
+  <br/>
+  <span>Reason: <%= blocked_user.reason || "N/A" %></span>
+</li>

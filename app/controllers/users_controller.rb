@@ -51,8 +51,6 @@ class UsersController < ApplicationController
   end
 
   def block
-    # p @blocked_user
-    # p params 
     if request.get?
       render "blocked_users/block_user_form"
     else

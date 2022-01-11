@@ -2,15 +2,15 @@ class User < ApplicationRecord
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
-                                  dependent:   :destroy
+                                  dependent: :destroy
   has_many :passive_relationships, class_name:  "Relationship",
                                    foreign_key: "followed_id",
-                                   dependent:   :destroy
+                                   dependent: :destroy
   has_many :blocked_users, class_name: "BlockedUser", 
                                    foreign_key: "blocker_id", 
                                    dependent: :destroy
   has_many :blocking_users, class_name: "BlockedUser",
-                                   foreign_key: "blocked_id".
+                                   foreign_key: "blocked_id",
                                    dependent: :destroy                            
   has_many :blocked, through: :blocked_users, source: :blocked
   has_many :blockers, through: :blocking_users, source: :blocker
@@ -119,9 +119,7 @@ class User < ApplicationRecord
   def block(other_user, reason) 
     self.unfollow(other_user)
     other_user.unfollow(self)
-    blocked_user = BlockedUser.create(blocker: self, blocked: other_user, reason: reason)
-    # blocked << other_user unless self == other_user
-    p blocked 
+    self.blocked_users.new(blocked: other_user, reason: reason) unless self == other_user
   end
 
   # Unblocks a user. 
