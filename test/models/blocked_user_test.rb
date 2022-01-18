@@ -5,13 +5,13 @@ class BlockedUserTest < ActiveSupport::TestCase
     michael = users(:michael)
     archer  = users(:archer)
     assert_not michael.blocked?(archer)
-    michael.block(archer)
+    michael.block(archer, "reason")
     assert michael.blocked?(archer)
     assert archer.blockers.include?(michael)
     michael.unblock(archer)
     assert_not michael.blocked?(archer)
     #Users can't block themselves
-    michael.block(michael)
+    michael.block(michael, "reason")
     assert_not michael.blocked?(michael)
   end
 
@@ -22,15 +22,15 @@ class BlockedUserTest < ActiveSupport::TestCase
     # Posts from followed user
     michael.follow(archer)
     assert michael.feed.any? { |post| post.user_id == archer.id }
-    michael.block(archer)
+    michael.block(archer, "reason")
     assert_not michael.feed.any? { |post| post.user_id == archer.id }
     assert_not archer.feed.any? { |post| post.user_id == michael.id }
   end
 
-  test "something" do
+  test "user can block another user" do
     michael = users(:michael)
     archer = users(:archer)
-    michael.block(archer)
+    michael.block(archer, "reason")
     assert archer.blocked_by?(michael)
   end
 end

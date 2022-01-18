@@ -125,7 +125,7 @@ class User < ApplicationRecord
   def block(other_user, reason) 
     self.unfollow(other_user)
     other_user.unfollow(self)
-    self.blocked_users.new(blocked: other_user, reason: reason) unless self == other_user
+    self.blocked_users.create(blocked: other_user, reason: reason) unless self == other_user
   end
 
   # Unblocks a user. 
