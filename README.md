@@ -1,7 +1,7 @@
 # Company Engneering Recruitment Exercise
 
 ## Info
-Added the ability to block users, take notes on the reason for blocking a user, dislaying a list of blocked users and adding a rake task that cleans up damage in the database caused by a hijacked user.
+Added the ability to block users, take notes on the reason for blocking a user, display a list of blocked users and added a rake task that cleans up damage in the database caused by a hijacked user.
 
 ## License
 
