@@ -1,5 +1,8 @@
 # Company Engneering Recruitment Exercise
 
+## Info
+Added the ability to block users, takes notes on the reason for blocking a user, dislaying a list of blocked users and adding a rake task that cleans up damage in the database caused by a hijacked user.
+
 ## License
 
 All source code in the [Ruby on Rails Tutorial](https://www.railstutorial.org/)
