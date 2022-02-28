@@ -1,8 +1,8 @@
 # Create a main sample user.
 User.create!(name:  "Example User",
-             email: "engineering-test@singleops.com",
-             password:              "SingleOps",
-             password_confirmation: "SingleOps",
+             email: "engineering-test@company.com",
+             password:              "company",
+             password_confirmation: "company",
              admin:     true,
              activated: true,
              activated_at: Time.zone.now)
@@ -43,10 +43,10 @@ end
 # Simulate Samy Worm
 samy = User.all.order("RANDOM()").first
 samy.update(name: "Samy Kamkar",
-             email: "everyones-hero@singleops.com",
+             email: "everyones-hero@company.com",
              password: "SamyWorm2005",
              password_confirmation: "SamyWorm2005")
-User.where.not(email: "everyones-hero@singleops.com").find_each do |user|
+User.where.not(email: "everyones-hero@company.com").find_each do |user|
   user.follow(samy) unless user.following? samy
 end
 
